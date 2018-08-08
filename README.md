@@ -19,6 +19,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   番剧
     -   UP 主投稿
     -   UP 主动态
+    -   UP 主频道
     -   UP 主默认收藏夹
     -   UP 主非默认收藏夹
     -   UP 主投币视频
@@ -195,16 +196,41 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   教务处通知
     -   图书馆通知
     -   计算机学院竞赛通知
+-   Keep
+    -   运动日记
+-   起点
+    -   章节
+    -   讨论区
+-   懂球帝
+    -   早报
+-   维基百科
+    -   中国大陆新闻动态
+-   雪球
+    -   用户动态
+    -   用户收藏动态
+-   中国美术馆
+    -   通知公告
+    -   新闻
+    -   媒体联报
+    -   展览预告
+    -   焦点专题
+-   Greasy Fork
+    -   脚本更新
 
 </details>
 
 ## 鸣谢
 
-### Special Sponsor
+### Special Sponsors
 
 <p>
 <a href="https://rixcloud.app/rsshub" target="_blank">
     <img width="200px" src="https://i.imgur.com/PpcSVCZ.png">
+</a>
+</p>
+<p>
+<a href="https://werss.app?utm_source=rsshub" target="_blank">
+    <img width="150px" src="https://cdn.weapp.design/werss/werss-logo.png">
 </a>
 </p>
 

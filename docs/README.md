@@ -11,11 +11,16 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ## 鸣谢
 
-### Special Sponsor
+### Special Sponsors
 
 <p>
 <a href="https://rixcloud.app/rsshub" target="_blank">
     <img width="200px" src="https://i.imgur.com/PpcSVCZ.png">
+</a>
+</p>
+<p>
+<a href="https://werss.app?utm_source=rsshub" target="_blank">
+    <img width="150px" src="https://cdn.weapp.design/werss/werss-logo.png">
 </a>
 </p>
 
@@ -107,7 +112,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 路由: `/bilibili/bangumi/:seasonid`
 
-参数: seasonid，番剧 id，番剧主页打开控制台执行 `window.INITIAL_STATE.mediaInfo.param.season_id` 获取
+参数: seasonid，番剧 id，番剧主页打开控制台执行 `window.__INITIAL_STATE__.ssId` 或 `window.__INITIAL_STATE__.mediaInfo.param.season_id` 获取
 
 ### UP 主投稿
 
@@ -124,6 +129,16 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 路由: `/bilibili/user/dynamic/:uid`
 
 参数: uid，用户 id，可在 UP 主主页中找到
+
+### UP 主频道
+
+举例: [https://rsshub.app/bilibili/channel/142821407/23390](https://rsshub.app/bilibili/channel/142821407/23390)
+
+路由: `/bilibili/channel/:uid/:cid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
+cid，频道 ID,可在频道的 URL 中找到
 
 ### UP 主默认收藏夹
 
@@ -1593,3 +1608,135 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/scnu/cs/match`
 
 参数：无
+
+## Keep
+
+### 运动日记
+
+举例：[https://rsshub.app/keep/user/556b02c1ab59390afea671ea](https://rsshub.app/keep/user/556b02c1ab59390afea671ea)
+
+路由: `/keep/user/:id`
+
+参数: id，Keep 用户 id
+
+## 起点
+
+### 章节
+
+举例： [https://rsshub.app/qidian/chapter/1010400217](https://rsshub.app/qidian/chapter/1010400217)
+
+路由： `/qidian/chapter/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
+
+### 讨论区
+
+举例： [https://rsshub.app/qidian/forum/1010400217](https://rsshub.app/qidian/forum/1010400217)
+
+路由： `/qidian/forum/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
+
+## 懂球帝
+
+### 早报
+
+举例： [https://rsshub.app/dongqiudi/daily](https://rsshub.app/dongqiudi/daily)
+
+路由： `/dongqiudi/daily`
+
+参数：无
+
+## 维基百科
+
+### 中国大陆新闻动态
+
+举例： [https://rsshub.app/wikipedia/mainland](https://rsshub.app/wikipedia/mainland)
+
+路由： `/wikipedia/mainland`
+
+参数：无
+
+## 雪球
+
+### 用户动态
+
+举例: [https://rsshub.app/xueqiu/user/8152922548](https://rsshub.app/xueqiu/user/8152922548)
+
+路由: `/xueqiu/user/:id/:type?`
+
+参数:
+
+id，用户 id，可在用户主页 URL 中找到
+
+type，可选，动态的类型，不填则默认全部
+
+| 原发布 | 长文 | 问答 | 热门 | 交易 |
+| ------ | ---- | ---- | ---- | ---- |
+| 0      | 2    | 4    | 9    | 11   |
+
+### 用户收藏动态
+
+举例: [https://rsshub.app/xueqiu/favorite/8152922548](https://rsshub.app/xueqiu/favorite/8152922548)
+
+路由: `/xueqiu/favorite/:id`
+
+参数:
+
+id，用户 id，可在用户主页 URL 中找到
+
+## 中国美术馆
+
+### 通知公告
+
+举例： [https://rsshub.app/namoc/announcement](https://rsshub.app/namoc/announcement)
+
+路由： `/namoc/announcement`
+
+参数：无
+
+### 新闻
+
+举例： [https://rsshub.app/namoc/news](https://rsshub.app/namoc/news)
+
+路由： `/namoc/news`
+
+参数：无
+
+### 媒体联报
+
+举例： [https://rsshub.app/namoc/media](https://rsshub.app/namoc/media)
+
+路由： `/namoc/media`
+
+参数：无
+
+### 展览预告
+
+举例： [https://rsshub.app/namoc/exhibition](https://rsshub.app/namoc/exhibition)
+
+路由： `/namoc/exhibition`
+
+参数：无
+
+### 焦点专题
+
+举例： [https://rsshub.app/namoc/specials](https://rsshub.app/namoc/specials)
+
+路由： `/namoc/specials`
+
+参数：无
+
+## Greasy Fork
+
+### 脚本更新
+
+举例: [https://rsshub.app/greasyfork/zh-CN/bilibili.com](https://rsshub.app/greasyfork/zh-CN/bilibili.com)
+
+路由: `/greasyfork/:language/:domain?`
+
+参数:
+
+language，语言，可在网站右上角找到， `all` 为所有语言
+
+domain，按脚本生效域名过滤，可选
