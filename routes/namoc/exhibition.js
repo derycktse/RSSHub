@@ -1,48 +1,43 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 const cheerio = require('cheerio');
 const url = require('url');
-
-const _axios_client = axios.create({
-    headers: {
-        'User-Agent': config.ua,
-    },
-});
 
 const host = 'http://www.namoc.org/zsjs/zlzx/';
 
 module.exports = async (ctx) => {
-    const response = await _axios_client.get(host);
+    const response = await axios.get(host);
 
     const $ = cheerio.load(response.data);
 
-    const list = $('#content div.rec-exh-news-list div.wrap:nth-child(2)').find('li');
-    const out = [];
+    const list = $('#content div.rec-exh-news-list div.wrap:nth-of-type(2)')
+        .find('li')
+        .get();
     const proList = [];
 
-    for (let i = 0; i < Math.min(list.length, 5); i++) {
-        const $ = cheerio.load(list[i]);
-        const title = $('a').text();
-        const itemUrl = url.resolve(host, $('a').attr('href'));
-        const cache = await ctx.cache.get(itemUrl);
-        if (cache) {
-            out.push(JSON.parse(cache));
-            continue;
-        }
-        const single = {
-            title,
-            link: itemUrl,
-            guid: itemUrl,
-        };
+    const out = await Promise.all(
+        list.map(async (item) => {
+            const $ = cheerio.load(item);
+            const title = $('a').text();
+            const itemUrl = url.resolve(host, $('a').attr('href'));
+            const cache = await ctx.cache.get(itemUrl);
+            if (cache) {
+                return Promise.resolve(JSON.parse(cache));
+            }
+            const single = {
+                title,
+                link: itemUrl,
+                guid: itemUrl,
+            };
 
-        try {
-            const es = _axios_client.get(itemUrl);
-            proList.push(es);
-            out.push(single);
-        } catch (err) {
-            console.log(`${title}: ${itemUrl} -- ${err.response.status}: ${err.response.statusText}`);
-        }
-    }
+            try {
+                const es = axios.get(itemUrl);
+                proList.push(es);
+                return Promise.resolve(single);
+            } catch (err) {
+                console.log(`${title}: ${itemUrl} -- ${err.response.status}: ${err.response.statusText}`);
+            }
+        })
+    );
 
     const responses = await axios.all(proList);
     for (let i = 0; i < responses.length; i++) {

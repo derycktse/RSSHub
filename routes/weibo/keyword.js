@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 const weiboUtils = require('./utils');
 
 module.exports = async (ctx) => {
@@ -9,7 +8,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://m.weibo.cn/api/container/getIndex?containerid=100103type%3D61%26q%3D${encodeURIComponent(keyword)}%26t%3D0`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://m.weibo.cn/p/searchall?containerid=100103type%3D1%26q%3D${encodeURIComponent(keyword)}`,
         },
     });
@@ -22,7 +20,7 @@ module.exports = async (ctx) => {
         item: data.map((item) => {
             const title = item.mblog.text.replace(/<img.*?>/g, '[图片]').replace(/<.*?>/g, '');
             return {
-                title: `${item.mblog.user.screen_name}: ${title.length > 24 ? title.slice(0, 24) + '...' : title}`,
+                title: `${item.mblog.user.screen_name}: ${title}`,
                 description: `${item.mblog.user.screen_name}: ${weiboUtils.format(item.mblog)}`,
                 pubDate: weiboUtils.getTime(item.mblog.created_at),
                 link: `https://weibo.com/${item.mblog.user.id}/${item.mblog.bid}`,

@@ -1,12 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
-
-const axios_ins = axios.create({
-    headers: {
-        'User-Agent': config.ua,
-    },
-});
 
 module.exports = async (ctx) => {
     if (ctx.params.platform === 'desktop') {
@@ -15,7 +8,7 @@ module.exports = async (ctx) => {
     if (ctx.params.platform === 'android-beta') {
         ctx.params.platform = 'android/beta';
     }
-    const response = await axios_ins.get(`https://www.mozilla.org/en-US/firefox/${ctx.params.platform}/notes/`);
+    const response = await axios.get(`https://www.mozilla.org/en-US/firefox/${ctx.params.platform}/notes/`);
     const data = response.data;
     const $ = cheerio.load(data);
 
@@ -29,6 +22,14 @@ module.exports = async (ctx) => {
                     .text()} release note`,
                 link: `https://www.mozilla.org/en-US/firefox/${ctx.params.platform}/notes/`,
                 description: $('.notes-section').html(),
+                guid: $('.version')
+                    .find('h2')
+                    .text(),
+                pubDate: new Date(
+                    $('.version')
+                        .find('p')
+                        .text()
+                ).toUTCString(),
             },
         ],
         description: $('.description').text(),

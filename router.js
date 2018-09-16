@@ -87,12 +87,14 @@ router.get('/rsshub/rss', require('./routes/rsshub/rss'));
 
 // bilibili
 router.get('/bilibili/user/video/:uid', require('./routes/bilibili/video'));
+router.get('/bilibili/user/article/:uid', require('./routes/bilibili/article'));
 router.get('/bilibili/user/fav/:uid', require('./routes/bilibili/userFav'));
 router.get('/bilibili/user/coin/:uid', require('./routes/bilibili/coin'));
 router.get('/bilibili/user/dynamic/:uid', require('./routes/bilibili/dynamic'));
 router.get('/bilibili/user/followers/:uid', require('./routes/bilibili/followers'));
 router.get('/bilibili/user/followings/:uid', require('./routes/bilibili/followings'));
 router.get('/bilibili/partion/:tid', require('./routes/bilibili/partion'));
+router.get('/bilibili/partion/ranking/:tid/:days?', require('./routes/bilibili/partion-ranking'));
 router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));
 router.get('/bilibili/video/reply/:aid', require('./routes/bilibili/reply'));
 router.get('/bilibili/link/news/:product', require('./routes/bilibili/linkNews'));
@@ -109,11 +111,20 @@ router.get('/bilibili/topic/:topic', require('./routes/bilibili/topic'));
 
 // bangumi
 router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
+router.get('/bangumi/subject/:id/:type', require('./routes/bangumi/subject'));
+router.get('/bangumi/person/:id', require('./routes/bangumi/person'));
+router.get('/bangumi/topic/:id', require('./routes/bangumi/group/reply.js'));
 
 // 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
 router.get('/weibo/user2/:uid', require('./routes/weibo/user2'));
 router.get('/weibo/keyword/:keyword', require('./routes/weibo/keyword'));
+
+// 贴吧
+router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
+router.get('/tieba/forum/good/:kw/:cid?', require('./routes/tieba/forum'));
+router.get('/tieba/post/:id', require('./routes/tieba/post'));
+router.get('/tieba/post/lz/:id', require('./routes/tieba/post'));
 
 // 网易云音乐
 router.get('/ncm/playlist/:id', require('./routes/ncm/playlist'));
@@ -123,6 +134,8 @@ router.get('/ncm/djradio/:id', require('./routes/ncm/djradio'));
 
 // 掘金
 router.get('/juejin/category/:category', require('./routes/juejin/category'));
+router.get('/juejin/tag/:tag', require('./routes/juejin/tag'));
+router.get('/juejin/trending/:category/:type', require('./routes/juejin/trending'));
 
 // 自如
 router.get('/ziroom/room/:city/:iswhole/:room/:keyword', require('./routes/ziroom/room'));
@@ -132,8 +145,7 @@ router.get('/express/:company/:number', require('./routes/express/express'));
 
 // 简书
 router.get('/jianshu/home', require('./routes/jianshu/home'));
-router.get('/jianshu/trending/weekly', require('./routes/jianshu/weekly'));
-router.get('/jianshu/trending/monthly', require('./routes/jianshu/monthly'));
+router.get('/jianshu/trending/:timeframe', require('./routes/jianshu/trending'));
 router.get('/jianshu/collection/:id', require('./routes/jianshu/collection'));
 router.get('/jianshu/user/:id', require('./routes/jianshu/user'));
 
@@ -143,10 +155,7 @@ router.get('/zhihu/people/activities/:id', require('./routes/zhihu/activities'))
 router.get('/zhihu/people/answers/:id', require('./routes/zhihu/answers'));
 router.get('/zhihu/zhuanlan/:id', require('./routes/zhihu/zhuanlan'));
 router.get('/zhihu/daily', require('./routes/zhihu/daily'));
-
-// 贴吧
-router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
-router.get('/tieba/forum/good/:kw/:cid?', require('./routes/tieba/forum'));
+router.get('/zhihu/hotlist', require('./routes/zhihu/hotlist'));
 
 // 妹子图
 router.get('/mzitu', require('./routes/mzitu/category'));
@@ -171,6 +180,9 @@ router.get('/douban/movie/playing/:score/:city', require('./routes/douban/playin
 router.get('/douban/movie/later', require('./routes/douban/later'));
 router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 router.get('/douban/group/:groupid', require('./routes/douban/group'));
+router.get('/douban/explore', require('./routes/douban/explore'));
+router.get('/douban/music/latest', require('./routes/douban/latest_music'));
+router.get('/douban/book/latest', require('./routes/douban/latest_book'));
 
 // 煎蛋
 router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
@@ -184,12 +196,13 @@ router.get('/dockone/weekly', require('./routes/dockone/weekly'));
 // 腾讯吐个槽
 router.get('/tucaoqq/post/:project/:key', require('./routes/tucaoqq/post'));
 
-// 笔趣阁
-router.get('/biquge/novel/latestchapter/:id', require('./routes/biquge/chapter'));
-
 // 开发者头条
 router.get('/toutiao/today', require('./routes/toutiao/today'));
 router.get('/toutiao/user/:id', require('./routes/toutiao/user'));
+
+// 众成翻译
+router.get('/zcfy/index', require('./routes/zcfy/index'));
+router.get('/zcfy/hot', require('./routes/zcfy/hot'));
 
 // 今日头条
 router.get('/jinritoutiao/keyword/:keyword', require('./routes/jinritoutiao/keyword'));
@@ -221,8 +234,11 @@ if (config.youtube && config.youtube.key) {
 
 // 即刻
 router.get('/jike/topic/:id', require('./routes/jike/topic'));
+router.get('/jike/topic/text/:id', require('./routes/jike/topicText'));
 router.get('/jike/topic/square/:id', require('./routes/jike/topicSquare'));
 router.get('/jike/user/:id', require('./routes/jike/user'));
+router.get('/jike/daily', require('./routes/jike/daily'));
+router.get('/jike/dev/:id', require('./routes/jike/topicDev'));
 
 // 极客时间
 router.get('/geektime/column/:cid', require('./routes/geektime/column'));
@@ -250,6 +266,11 @@ router.get('/v2ex/topics/:type', require('./routes/v2ex/topics'));
 // Telegram
 if (config.telegram && config.telegram.token) {
     router.get('/telegram/channel/:username', require('./routes/telegram/channel'));
+    if (config.imgur && config.imgur.clientId) {
+        router.get('/telegram/stickerpack/:name', require('./routes/telegram/stickerpack'));
+    } else {
+        logger.warn('Telegram Sticker Pack RSS is disabled for lacking config.');
+    }
 } else {
     logger.warn('Telegram RSS is disabled for lacking config.');
 }
@@ -265,6 +286,8 @@ if (config.github && config.github.access_token) {
 }
 router.get('/github/trending/:since/:language?', require('./routes/github/trending'));
 router.get('/github/issue/:user/:repo', require('./routes/github/issue'));
+router.get('/github/user/followers/:user', require('./routes/github/follower'));
+router.get('/github/stars/:user/:repo', require('./routes/github/star'));
 
 // konachan
 router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popular_recent'));
@@ -281,15 +304,13 @@ router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/p
 // 纽约时报
 router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 
-// UU看书
-router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
-
 // 3dm
-router.get('/3dm/:name/:type', require('./routes/3dm/news'));
+router.get('/3dm/:name/:type', require('./routes/3dm/game'));
 router.get('/3dm/news', require('./routes/3dm/news_center'));
 
 // 喜马拉雅
 router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
+router.get('/ximalaya/album/:id', require('./routes/ximalaya/album'));
 
 // EZTV
 router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));
@@ -297,15 +318,6 @@ router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));
 // 什么值得买
 router.get('/smzdm/keyword/:keyword', require('./routes/smzdm/keyword'));
 router.get('/smzdm/ranking/:rank_type/:rank_id/:hour', require('./routes/smzdm/ranking'));
-
-// SHMTU
-router.get('/shmtu/events', require('./routes/shmtu/events'));
-router.get('/shmtu/notes', require('./routes/shmtu/notes'));
-router.get('/shmtu/jwc/:type', require('./routes/shmtu/jwc'));
-
-// SWUST
-router.get('/swust/jwc/:type', require('./routes/swust/jwc'));
-router.get('/swust/cs/:type', require('./routes/swust/cs'));
 
 // 新京报
 router.get('/bjnews/:cat', require('./routes/bjnews/news'));
@@ -326,16 +338,10 @@ router.get('/mihoyo/bh2/:type', require('./routes/mihoyo/bh2'));
 router.get('/cctv/:category', require('./routes/cctv/category'));
 
 // 财新
-router.get('/caixin/weekly/:category', require('./routes/caixin/weekly'));
+router.get('/caixin/:column/:category', require('./routes/caixin/category'));
 
 // 草榴社区
 router.get('/t66y/:id', require('./routes/t66y/index'));
-
-// 科技星球
-router.get('/kejixingqiu/home', require('./routes/kejixingqiu/home'));
-
-// PKUEECS
-router.get('/pku/eecs/:type?', require('./routes/pku/eecs'));
 
 // 机核
 router.get('/gcores/category/:category', require('./routes/gcores/category'));
@@ -349,6 +355,9 @@ router.get('/one', require('./routes/one/index'));
 // Firefox
 router.get('/firefox/release/:platform', require('./routes/firefox/release'));
 
+// Thunderbird
+router.get('/thunderbird/release', require('./routes/thunderbird/release'));
+
 // tuicool
 router.get('/tuicool/mags/:type', require('./routes/tuicool/mags'));
 
@@ -357,11 +366,6 @@ router.get('/hexo/next/:url', require('./routes/hexo/next'));
 
 // 小米
 router.get('/mi/crowdfunding', require('./routes/mi/crowdfunding'));
-
-// SCNU
-router.get('/scnu/jw', require('./routes/scnu/jw'));
-router.get('/scnu/library', require('./routes/scnu/library'));
-router.get('/scnu/cs/match', require('./routes/scnu/cs/match'));
 
 // Keep
 router.get('/keep/user/:id', require('./routes/keep/user'));
@@ -378,7 +382,8 @@ router.get('/namoc/exhibition', require('./routes/namoc/exhibition'));
 router.get('/namoc/specials', require('./routes/namoc/specials'));
 
 // 懂球帝
-router.get('/dongqiudi/daily', require('./routes/dongqiudi/index'));
+router.get('/dongqiudi/daily', require('./routes/dongqiudi/daily'));
+router.get('/dongqiudi/result/:team', require('./routes/dongqiudi/result'));
 
 // 维基百科
 router.get('/wikipedia/mainland', require('./routes/wikipedia/mainland'));
@@ -408,6 +413,9 @@ router.get('/atfd/:locations/:nearby?', require('./routes/atfd/index'));
 // Fir
 router.get('/fir/update/:id', require('./routes/fir/update'));
 
+// Nvidia Web Driver
+router.get('/nvidia/webdriverupdate', require('./routes/nvidia/webdriverupdate'));
+
 // Google
 router.get('/google/scholar/:query', require('./routes/google/scholar'));
 
@@ -420,11 +428,132 @@ router.get('/imuseum/:city/:type', require('./routes/imuseum'));
 // AppStore
 router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
 router.get('/appstore/price/:country/:type/:id', require('./routes/appstore/price'));
+router.get('/appstore/iap/:country/:id', require('./routes/appstore/in-app-purchase'));
 
 // Hopper
 router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
 
 // wechat
 router.get('/wechat/wasi/:id', require('./routes/wechat/wasi'));
+
+// 马蜂窝
+router.get('/mafengwo/note/:type', require('./routes/mafengwo/note'));
+
+// 中国地震局震情速递（与地震台网同步更新）
+router.get('/earthquake', require('./routes/earthquake'));
+
+// 笔趣阁
+router.get('/biquge/novel/latestchapter/:id', require('./routes/novel/biquge'));
+
+// UU看书
+router.get('/uukanshu/chapter/:uid', require('./routes/novel/uukanshu'));
+
+// 小说
+router.get('/novel/biquge/:id', require('./routes/novel/biquge'));
+router.get('/novel/uukanshu/:uid', require('./routes/novel/uukanshu'));
+router.get('/novel/wenxuemi/:id1/:id2', require('./routes/novel/wenxuemi'));
+router.get('/novel/booksky/:id', require('./routes/novel/booksky'));
+
+// 中国气象网
+router.get('/weatheralarm', require('./routes/weatheralarm'));
+
+// Gitlab
+router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
+
+// 忧郁的弟弟
+router.get('/mygalgame', require('./routes/galgame/mygalgame'));
+
+// 大连工业大学
+router.get('/dpu/jiaowu/news/:type?', require('./routes/universities/dpu/jiaowu/news'));
+router.get('/dpu/wlfw/news/:type?', require('./routes/universities/dpu/wlfw/news'));
+
+// 东南大学
+router.get('/seu/radio/academic', require('./routes/universities/seu/radio/academic'));
+
+// 哈尔滨工业大学
+router.get('/hit/jwc', require('./routes/universities/hit/jwc'));
+
+// 上海科技大学
+router.get('/shanghaitech/sist/activity', require('./routes/universities/shanghaitech/sist/activity'));
+
+// 上海交通大学
+router.get('/sjtu/seiee/academic', require('./routes/universities/sjtu/seiee/academic'));
+
+// 江南大学
+router.get('/ju/jwc/:type?', require('./routes/universities/ju/jwc'));
+
+// 北京大学
+router.get('/pku/eecs/:type?', require('./routes/universities/pku/eecs'));
+
+// 上海海事大学
+router.get('/shmtu/events', require('./routes/universities/shmtu/events'));
+router.get('/shmtu/notes', require('./routes/universities/shmtu/notes'));
+router.get('/shmtu/jwc/:type', require('./routes/universities/shmtu/jwc'));
+
+// 西南科技大学
+router.get('/swust/jwc/:type', require('./routes/universities/swust/jwc'));
+router.get('/swust/cs/:type', require('./routes/universities/swust/cs'));
+
+// 华南师范大学
+router.get('/scnu/jw', require('./routes/universities/scnu/jw'));
+router.get('/scnu/library', require('./routes/universities/scnu/library'));
+router.get('/scnu/cs/match', require('./routes/universities/scnu/cs/match'));
+
+// 中国科学院
+router.get('/cas/sim/academic', require('./routes/universities/cas/sim/academic'));
+
+// 南京邮电大学
+router.get('/njupt/jwc/:type?', require('./routes/universities/njupt/jwc'));
+
+// 南昌航空大学
+router.get('/nchu/jwc/:type?', require('./routes/universities/nchu/jwc'));
+
+// 哈尔滨工程大学
+router.get('/heu/ugs/news/:author?/:category?', require('./routes/universities/heu/ugs/news'));
+
+// 重庆大学
+router.get('/cqu/jwc/announcement', require('./routes/universities/cqu/jwc/announcement'));
+
+// 成都信息工程大学
+router.get('/cuit/cxxww/:type?', require('./routes/universities/cuit/cxxww'));
+
+// 重庆科技学院
+router.get('/cqust/jw/:type?', require('./routes/universities/cqust/jw'));
+router.get('/cqust/lib/:type?', require('./routes/universities/cqust/lib'));
+
+// 常州大学
+router.get('/cczu/jwc/:category?', require('./routes/universities/cczu/jwc'));
+router.get('/cczu/news/:category?', require('./routes/universities/cczu/news'));
+
+// ifanr
+router.get('/ifanr/appso', require('./routes/ifanr/appso'));
+
+// 果壳网
+router.get('/guokr/scientific', require('./routes/guokr/scientific'));
+
+// 联合早报
+router.get('/zaobao/realtime/:type?', require('./routes/zaobao/realtime'));
+router.get('/zaobao/znews/:type?', require('./routes/zaobao/znews'));
+
+// Apple
+router.get('/apple/exchange_repair/:country?', require('./routes/apple/exchange_repair'));
+
+// Minecraft CurseForge
+router.get('/curseforge/files/:project', require('./routes/curseforge/files'));
+
+// 抖音
+router.get('/douyin/user/:id', require('./routes/douyin/user'));
+
+// 少数派 sspai
+router.get('/sspai/series', require('./routes/sspai/series'));
+
+// xclient.info
+router.get('/xclient/app/:name', require('./routes/xclient/app'));
+
+// 中国驻外使领事馆
+router.get('/embassy/:country/:city?', require('./routes/embassy/index'));
+
+// 澎湃新闻
+router.get('/thepaper/featured', require('./routes/thepaper/featured'));
 
 module.exports = router;

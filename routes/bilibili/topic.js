@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const JSONbig = require('json-bigint');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const topic = ctx.params.topic;
@@ -10,7 +9,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://api.vc.bilibili.com/topic_svr/v1/topic_svr/topic_new?topic_name=${urlEncodedTopic}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://www.bilibili.com/tag/${urlEncodedTopic}/feed`,
         },
         transformResponse: [(data) => data],
@@ -40,15 +38,7 @@ module.exports = async (ctx) => {
             let link = '';
             if (data.dynamic_id) {
                 link = `https://t.bilibili.com/${data.dynamic_id}`;
-            } else if (data.aid) {
-                link = `https://www.bilibili.com/video/av${data.aid}`;
-            } else if (data.video_playurl) {
-                link = `https://vc.bilibili.com/video/${data.id}`;
-            } else if (data.id) {
-                link = `https://h.bilibili.com/${data.id}`;
-            } else if (data.rp_id && item.desc && item.desc.dynamic_id) {
-                link = `https://t.bilibili.com/${item.desc.dynamic_id}`;
-            } else if (data.sketch && data.sketch.sketch_id && item.desc && item.desc.dynamic_id) {
+            } else if (item.desc && item.desc.dynamic_id) {
                 link = `https://t.bilibili.com/${item.desc.dynamic_id}`;
             }
 

@@ -1,7 +1,5 @@
 const axios = require('../../utils/axios');
 const currency = require('currency-symbol-map');
-const config = require('../../config');
-
 module.exports = async (ctx) => {
     const country = ctx.params.country;
     const type = ctx.params.type.toLowerCase() === 'mac' ? 'macapps' : 'apps';
@@ -13,7 +11,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: url,
         headers: {
-            'User-Agent': config.ua,
             Referer: `http://www.cheapcharts.info/itunes/${country}/apps/detail-view/${id}`,
         },
     });
@@ -34,13 +31,13 @@ module.exports = async (ctx) => {
             title: `${result.title} is now ${currency(result.currency)}${result.price} `,
             description: `<a href="${link}" target="_blank">Go to App Store</a>`,
             link,
-            guid: country + id,
+            guid: id + result.priceLastChangeDate,
         };
         item.push(single);
     }
     ctx.state.data = {
         title,
-        link: url,
+        link,
         item,
     };
 };

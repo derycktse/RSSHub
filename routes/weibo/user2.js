@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 const weiboUtils = require('./utils');
 
 module.exports = async (ctx) => {
@@ -10,7 +9,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `http://service.weibo.com/widget/widget_blog.php?uid=${uid}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `http://service.weibo.com/widget/widget_blog.php?uid=${uid}`,
         },
     });
@@ -31,9 +29,7 @@ module.exports = async (ctx) => {
             .text()
             .replace(/^\s+|\s+$/g, '')
             .replace(/\u200B/g, '');
-        if (wb.title.length > 24) {
-            wb.title = wb.title.slice(0, 24) + '...';
-        } else if (wb.title === '') {
+        if (wb.title === '') {
             wb.title = '[图片]';
         }
         wb.description = titleEle
