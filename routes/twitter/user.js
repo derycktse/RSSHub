@@ -19,7 +19,7 @@ module.exports = async (ctx) => {
         description: data[0].user.description,
         item: data.map((item) => {
             item = item.retweeted_status || item;
-            item.full_text = item.full_text.replace(/https:\/\/t\.co(.*)$/, '');
+            item.full_text = item.full_text.replace(/https:\/\/t\.co(.*)/g, '');
             let img = '';
             item.extended_entities &&
                 item.extended_entities.media.forEach((item) => {
@@ -27,7 +27,7 @@ module.exports = async (ctx) => {
                 });
             let url = '';
             item.entities.urls.forEach((u) => {
-                url += `<a href="${u.expanded_url}" target="_blank"></a>`;
+                url += `<a href="${u.expanded_url}" target="_blank">${u.expanded_url}</a>`;
             });
             return {
                 title: `${item.in_reply_to_screen_name ? 'Re ' : ''}${item.full_text}`,
